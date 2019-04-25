@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #555;
+    width: 240px;
+    margin: 0 auto;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+header {
+    text-align: center;
+    margin: 16px 0 25px 0;
+}
+
+header img {
+    position: absolute;
+    margin-left: -9px;
+    top: 16px;
+    width: 28px;
+}
+
+header span {
+    font-size: 19px;
+    margin-left: 19px;
+}
+
+ul {
+    list-style: none;
+    -webkit-padding-start: 0;
+}
+
+li {
+    margin: 0 0 15px 41px;
+}
+
+label {
+    display: inline-block;
+    width: 120px;
+}
+
+.switchery-small {
+    margin-top: -4px;
+}

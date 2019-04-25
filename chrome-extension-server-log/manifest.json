@@ -1,0 +1,30 @@
+{
+    "name": "ServerLog",
+    "description": "Display server side logs in Chrome dev tools (F12).",
+    "version": "1.0.0",
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "icons": {
+        "19": "icon.png",
+        "38": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "Server Log",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*/*"
+    ],
+    "devtools_page": "devtools.html",
+    "manifest_version": 2
+}
