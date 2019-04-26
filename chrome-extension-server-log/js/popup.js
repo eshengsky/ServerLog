@@ -11,18 +11,6 @@ if (localStorage.serverlog_activeOn === 'on' || typeof localStorage.serverlog_ac
 }
 switcherInit(el1);
 
-const el2 = document.querySelector('#check-signal');
-if (localStorage.serverlog_signalOn === 'on' || typeof localStorage.serverlog_signalOn === 'undefined') {
-    el2.checked = true;
-}
-switcherInit(el2);
-
-const el3 = document.querySelector('#check-cache');
-if (localStorage.serverlog_cacheOn === 'on') {
-    el3.checked = true;
-}
-switcherInit(el3);
-
 document.querySelector('#check-active')
     .addEventListener('change', evt => {
         const active = evt.target.checked;
@@ -32,16 +20,4 @@ document.querySelector('#check-active')
             chrome.browserAction.setIcon({ path: 'icon_inactive.png' });
         }
         localStorage.serverlog_activeOn = active ? 'on' : 'off';
-    });
-
-document.querySelector('#check-signal')
-    .addEventListener('change', evt => {
-        const signal = evt.target.checked;
-        localStorage.serverlog_signalOn = signal ? 'on' : 'off';
-    });
-
-document.querySelector('#check-cache')
-    .addEventListener('change', evt => {
-        const cache = evt.target.checked;
-        localStorage.serverlog_cacheOn = cache ? 'on' : 'off';
     });

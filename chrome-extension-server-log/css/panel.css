@@ -636,3 +636,36 @@ i.icon-wiki {
     top: 1px;
     margin-right: 2px;
 }
+
+.key-section {
+    display: none;
+}
+
+body.enterKey .key-section {
+    display: block;
+}
+
+body.enterKey .log-section header,
+body.enterKey .log-section footer {
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
+    z-index: 2;
+}
+
+.keypanel {
+    position: fixed;
+    z-index: 3;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    left: 50%;
+}

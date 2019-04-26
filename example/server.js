@@ -2,9 +2,15 @@ const express = require('express');
 const app = express();
 const serverlog = require('../index');
 serverlog.config({
-    colors: true,
-    enableChromeExtension: true,
-    chromeExtensionKey: '111'
+    console: {
+        colors: true,
+        appendUrl: true,
+        forceSingleLine: false
+    },
+    extension: {
+        enable: true,
+        key: '111'
+    }
 })
 const logger = serverlog.getLogger();
 

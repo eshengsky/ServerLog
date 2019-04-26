@@ -1,12 +1,21 @@
-const uuid = require('uuid');
+const shortid = require('shortid');
 const Logger = require('./logger');
 
 const reqIdName = 'X-Request-Id';
 const loggers = [];
+
+// the default options
 let options = {
-    colors: true,
-    enableChromeExtension: true,
-    chromeExtensionKey: 'yourownsecretkey'
+    console: {
+        colors: true,
+        appendUrl: true,
+        forceSingleLine: false
+    },
+    extension: {
+        enable: true,
+        key: 'yourownsecretkey',
+        maxLength: 80 * 1024
+    }
 };
 
 const logLevels = ['info', 'warn', 'error'];
@@ -19,14 +28,24 @@ logLevels.forEach(level => {
     originalExtLogger[level] = Logger.prototype[`${level}E`];
 });
 
+/**
+ * set options
+ *
+ * @param {object} cfg - options object
+ */
 function config(cfg) {
     options = Object.assign(options, cfg);
 }
 
+/**
+ * the middleware for registering serverlog to each request
+ *
+ * @returns {function}
+ */
 function middleware() {
     return (req, res, next) => {
         // Set unique request id to combine logs
-        const reqId = req.query.__id || req.get(reqIdName) || uuid.v1();
+        const reqId = req.query.__id || req.get(reqIdName) || shortid.generate();
         req.__id = reqId;
         res.locals.__id = reqId;
         res.setHeader(reqIdName, reqId);
@@ -34,26 +53,26 @@ function middleware() {
         // rewrite logger.xxx to append req object
         logLevels.forEach(level => {
             Logger.prototype[level] = function (...args) {
-                const lastParam = args[args.length - 1];
-                if (!(lastParam && lastParam.constructor && lastParam.constructor.name === 'IncomingMessage')) {
-                    args.push(req);
+                if (!args.length) {
+                    args.push(undefined);
                 }
+                args.push(req);
                 originalLogger[level].apply(this, args);
             };
 
             Logger.prototype[`${level}C`] = function (...args) {
-                const lastParam = args[args.length - 1];
-                if (!(lastParam && lastParam.constructor && lastParam.constructor.name === 'IncomingMessage')) {
-                    args.push(req);
+                if (!args.length) {
+                    args.push(undefined);
                 }
+                args.push(req);
                 originalConLogger[level].apply(this, args);
             };
 
             Logger.prototype[`${level}E`] = function (...args) {
-                const lastParam = args[args.length - 1];
-                if (!(lastParam && lastParam.constructor && lastParam.constructor.name === 'IncomingMessage')) {
-                    args.push(req);
+                if (!args.length) {
+                    args.push(undefined);
                 }
+                args.push(req);
                 originalExtLogger[level].apply(this, args);
             };
         });
@@ -62,7 +81,13 @@ function middleware() {
     }
 }
 
-function getLogger(category) {
+/**
+ * create logger instance
+ *
+ * @param {string} [category='normal'] - current category name
+ * @returns {Logger}
+ */
+function getLogger(category = 'normal') {
     let instance = loggers[category];
     if (!instance) {
         instance = new Logger(options, category);

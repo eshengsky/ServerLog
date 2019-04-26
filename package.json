@@ -18,8 +18,9 @@
   "homepage": "https://github.com/eshengsky/ServerLog#readme",
   "dependencies": {
     "chalk": "^2.4.2",
+    "json-stringify-safe": "^5.0.1",
     "lz-string": "^1.4.4",
     "moment": "^2.24.0",
-    "uuid": "^3.3.2"
+    "shortid": "^2.2.14"
   }
 }

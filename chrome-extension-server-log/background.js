@@ -3,10 +3,10 @@ chrome.webRequest.onBeforeSendHeaders.addListener(details => {
     // Add request headers with secret key
     const existsServerLog = details.requestHeaders.some(header => header.name === reqHeaderName);
     if (!existsServerLog) {
-        if (localStorage.serverlog_activeOn === 'on' || typeof localStorage.serverlog_activeOn === 'undefined') {
+        if ((localStorage.serverlog_activeOn === 'on' || typeof localStorage.serverlog_activeOn === 'undefined') && localStorage.serverlog_key) {
             details.requestHeaders.push({
                 name: reqHeaderName,
-                value: '111' //TODO:
+                value: localStorage.serverlog_key
             });
         }
     }

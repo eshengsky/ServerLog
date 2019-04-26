@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const serverlog = require('../../index');
-const logger = serverlog.getLogger('list');
+const logger = serverlog.getLogger();
 
 router.get('/', (req, res) => {
-    try {
-        JSON.parse();
-    } catch (err) {
-        logger.error('This is an error log. Error:', err);
-    }
+    logger.info(req);
     res.send('Product list.');
 });
 

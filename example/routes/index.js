@@ -6,7 +6,7 @@ const logger = serverlog.getLogger('home');
 
 router.get('/', (req, res) => {
     logger.info('This is an info log.');
-
+    
     let undef;
     logger.warn('This is a warning log.', 'Take care, undef value is:', undef);
 
@@ -56,9 +56,11 @@ router.get('/', (req, res) => {
         if (err) {
             logger.error('get data failed, err:', err);
         } else if (resp.statusCode === 200) {
-            // log full response body only in extension
+            // log full response body in extension
             logger.infoE('get some data from Github:', JSON.parse(body));
-            logger.infoC('get some data from Github, only support to view response in Chrome extension.');
+
+            // simplely log in console
+            logger.infoC('get some data from Github, please view response in Chrome extension.');
         } else {
             logger.error('get data failed, statusCode:', resp.statusCode);
         }

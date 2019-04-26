@@ -1,14 +1,6 @@
 (function () {
     const getEl = document.querySelector.bind(document);
 
-    const errorEnum = {
-        accountEmpty: 0,
-
-        pwdEmpty: 1,
-
-        loginFailed: 2
-    };
-
     require.config({ paths: { 'vs': './monaco-editor/min/vs' } });
     require.config({
         'vs/nls': {
@@ -83,27 +75,6 @@
         childList: true,
         subtree: false
     });
-
-    const showError = function (type) {
-        const el = getEl('#errMsg');
-        switch (type) {
-            case errorEnum.accountEmpty:
-                el.textContent = '用户名不能为空！';
-                break;
-            case errorEnum.pwdEmpty:
-                el.textContent = '密码不能为空！';
-                break;
-            case errorEnum.loginFailed:
-                el.textContent = '用户名或密码错误！';
-                break;
-            default:
-                break;
-        }
-        el.style.display = 'inline';
-        setTimeout(() => {
-            el.style.display = 'none';
-        }, 1000);
-    };
 
     // 禁用右键
     window.document.addEventListener('contextmenu', e => {
@@ -185,11 +156,6 @@
                 e.target.classList.add('active');
                 filterLogs();
             }
-        });
-
-    getEl('#settings')
-        .addEventListener('click', () => {
-            chrome.tabs.create({ url: 'popup.html' });
         });
 
     getEl('#logs')

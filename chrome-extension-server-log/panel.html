@@ -26,7 +26,14 @@
 </head>
 
 <body>
-    <section>
+    <div class="key-section">
+        <div class="mask"></div>
+        <div class="keypanel">
+            <input id="extkey" placeholder="your secret key">
+            <button>Save</button>
+        </div>
+    </div>
+    <div class="log-section">
         <header>
             <span id="record">
                 <i class="fa fa-circle"></i>
@@ -41,14 +48,14 @@
                 </label>
                 <input id="search" type="search" placeholder="日志关键字">
             </div>
-            
+
             <label>日志级别</label>
             <div class="level-wrap">
                 <div title="信息" id="info" class="active"></div>
                 <div title="警告" id="warn"></div>
                 <div title="错误" id="error"></div>
             </div>
-            
+
             <div class="custom-control custom-checkbox" title="页面刷新或重新导航时不清除已有日志">
                 <input class="custom-control-input" id="check-preserve" type="checkbox">
                 <label class="custom-control-label" for="check-preserve">保持日志</label>
@@ -67,7 +74,8 @@
         <div id="no-data">无筛选结果</div>
         <footer>
             <span class="desc">
-                <a class="line-link" href="http://10.200.5.103/h5_tools/chrome-extension-server-log" target="_blank">Code</a> with
+                <a class="line-link" href="http://10.200.5.103/h5_tools/chrome-extension-server-log"
+                    target="_blank">Code</a> with
                 <i class="iconfont icon-love" title="love"></i> by
                 <a class="line-link" href="https://github.com/eshengsky" target="_blank">Sky</a>
             </span>
@@ -76,7 +84,7 @@
                 <span>当前版本</span><span id="curr-version"></span>，<span id="update-info">检查更新中...</span>
             </div>
         </footer>
-    </section>
+    </div>
     <script src="./monaco-editor/min/vs/loader.js"></script>
     <script src="./js/panel.js"></script>
 </body>

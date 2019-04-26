@@ -26,7 +26,7 @@ function requestHandler(request) {
         // 开启监听才继续
         try {
             const record = localStorage.serverlog_activeOn;
-            if ((typeof record === 'undefined' || record === 'on') && headerLog) {
+            if ((typeof record === 'undefined' || record === 'on') && localStorage.serverlog_key && headerLog) {
                 logArr = JSON.parse(LZString.decompressFromEncodedURIComponent(headerLog.value));
                 fragment = document.createDocumentFragment();
 
@@ -239,5 +239,10 @@ chrome.devtools.panels.create('ServerLog',
     panel => {
         panel.onShown.addListener(panelWindow => {
             PanelWindow = panelWindow;
+
+            // check if key is set
+            if (!localStorage.serverlog_key) {
+                panelWindow.document.body.classList.add('enterKey');
+            }
         });
     });
