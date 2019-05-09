@@ -13,7 +13,7 @@ This extension is part of [ServerLog](https://github.com/eshengsky/ServerLog), b
 
 ## Preview
 
-![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_ext_zh.png)
+![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_ext_en.png)
 
 ## Install
 
