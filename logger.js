@@ -68,7 +68,11 @@ Logger.prototype = {
                 }
 
                 if (this.options.console.appendUrl) {
-                    args.push(`(URL: ${getFullUrl(req)})`);
+                    let urlStr = `(URL: ${getFullUrl(req)})`;
+                    if (this.options.console.colors) {
+                        urlStr = chalk.grey(urlStr);
+                    }
+                    args.push(urlStr);
                 }
             }
         }
@@ -87,7 +91,7 @@ Logger.prototype = {
                     newArgs.push(errStr);
                 } else {
                     const inspectOpt = {
-                        depth: null
+                        depth: this.options.depth
                     }
                     if (this.options.console.colors) {
                         inspectOpt.colors = true;

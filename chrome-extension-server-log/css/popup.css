@@ -2,8 +2,9 @@ body {
     margin: 0;
     padding: 0;
     font-size: 14px;
-    color: #555;
-    width: 240px;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
+    color: #333;
+    width: 205px;
     margin: 0 auto;
     -webkit-user-select: none;
     user-select: none;
@@ -32,12 +33,12 @@ ul {
 }
 
 li {
-    margin: 0 0 15px 41px;
+    margin: 20px 0px 20px 20px;
 }
 
 label {
     display: inline-block;
-    width: 120px;
+    width: 130px;
 }
 
 .switchery-small {

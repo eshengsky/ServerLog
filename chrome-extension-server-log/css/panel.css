@@ -3,13 +3,13 @@ body {
     padding: 0;
     background: #fff;
     font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
 }
 
 header {
     background: #fafafa;
     padding: 3px 10px;
-    /* border-bottom: 1px solid #ddd; */
-    color: #666;
+    color: #333;
     position: fixed;
     top: 0;
     width: 100%;
@@ -30,7 +30,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 select {
-    color: #666;
+    color: #333;
     background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 5px center;
     background-size: 8px 10px;
     -webkit-appearance: none;
@@ -85,8 +85,8 @@ header span label {
 }
 
 #settings i {
-    font-size: 18px;
     cursor: pointer;
+    color: #555;
 }
 
 .level-wrap {
@@ -248,11 +248,11 @@ li.warn .log-content:hover {
 
 span.req-uri {
     display: block;
-    color: #777;
+    color: #888;
 }
 
 span.req-uri .link {
-    color: #777;
+    color: #888;
     font-style: italic;
 }
 
@@ -314,7 +314,7 @@ footer {
     background: #fafafa;
     padding: 0 10px 1px;
     border-top: 1px solid #ddd;
-    color: #666;
+    color: #555;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -336,7 +336,7 @@ footer .desc {
 
 footer a {
     text-decoration: none;
-    color: #666;
+    color: #555;
 }
 
 footer a:active, footer a:hover {
@@ -359,11 +359,12 @@ footer a:active, footer a:hover {
 
 #filter-info {
     color: orangered;
-    margin-left: -22px;
+    margin-left: -18px;
 }
 
 #total-count {
     font-style: normal;
+    margin: 0 3px;
 }
 
 #user-name {
@@ -409,7 +410,7 @@ ul li:hover .copy, ul li:hover .copied {
     transform: rotate(.001deg) translateY(0);
 }
 
-.icon-love {
+.iconlove {
     font-size: 15px;
     color: orangered;
 }
@@ -475,25 +476,24 @@ ul li:hover .copy, ul li:hover .copied {
 
 .custom-control-label::after {
     position: absolute;
-    top: 6px;
-    left: 1px;
+    top: 3px;
+    left: -2px;
     display: block;
-    width: 1rem;
-    height: 1rem;
+    width: 24px;
+    height: 24px;
     content: "";
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 50% 50%;
+    background-size: 40% 40%;
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
-    background-color: #999;
     border-color: #999;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E")
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23555' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E")
 }
 
 #no-data {
@@ -549,18 +549,11 @@ span.category {
     text-transform: uppercase;
 }
 
-i.icon-link {
+i.iconlink {
     font-size: 12px;
     position: relative;
     top: -1px;
-    margin-right: 3px;
     right: 0px;
-}
-
-i.iconfont.icon-file_type_vscode {
-    color: #666;
-    font-size: 13px;
-    margin-right: 2px;
 }
 
 a.file-link, a.proxy-link {
@@ -602,7 +595,6 @@ a.file-link, a.proxy-link {
 }
 
 .noscroll {
-    height: 100%;
     overflow: hidden;
 }
 
@@ -611,9 +603,9 @@ a.full-link, a.line-link {
     text-decoration: underline;
 }
 
-.icon-full-screen {
+.iconfull-screen {
     font-size: 13px;
-    margin-right: 1px;
+    margin-right: 4px;
 }
 
 a.btn-link {
@@ -631,12 +623,6 @@ a.btn-link:hover {
     background: #f0f0f0;
 }
 
-i.icon-wiki {
-    position: relative;
-    top: 1px;
-    margin-right: 2px;
-}
-
 .key-section {
     display: none;
 }
@@ -646,6 +632,7 @@ body.enterKey .key-section {
 }
 
 body.enterKey .log-section header,
+body.enterKey #logs,
 body.enterKey .log-section footer {
     -webkit-filter: blur(1px);
     filter: blur(1px);
@@ -661,11 +648,102 @@ body.enterKey .log-section footer {
     z-index: 2;
 }
 
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+  
+    50% {
+        opacity: 1;
+    }
+}
+  
 .keypanel {
     position: fixed;
     z-index: 3;
     top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+    /* -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%); */
     left: 50%;
+    margin-left: -140px;
+    margin-top: -60px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    animation: zoomIn .6s;
+}
+
+.keypanel h3 {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 10px 0;
+}
+
+input#extkey {
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0 6px;
+    font-size: 14px;
+}
+
+.keypanel button {
+    height: 30px;
+    border: 1px solid #55bef9;
+    background: #55bef9;
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.keypanel button:hover {
+    border-color: #35b0f5;
+    background: #35b0f5;
+}
+
+.keypanel p {
+    margin: 6px 0 0;
+}
+
+.keypanel p a {
+    font-size: 12px;
+    color: #999;
+}
+
+.keypanel p a:hover,
+.keypanel p a:active,
+.keypanel p a:visited {
+    color: #999;
+}
+
+#btnWhat {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#logs:empty:after {
+    content: ' __MSG_waiting__';
+    color: #777;
+    font-size: 14px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    width: 300px;
+    margin-left: -150px;
+    top: 50%;
+    margin-top: -22px;
+    white-space: pre;
+    text-align: center;
+    line-height: 2;
+}
+
+body.enterKey #logs:empty:after {
+    display: none;
+}
+
+span#curr-version {
+    margin: 0 0 0 2px;
 }

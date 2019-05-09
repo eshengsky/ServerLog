@@ -2,13 +2,36 @@
     const getEl = document.querySelector.bind(document);
 
     require.config({ paths: { 'vs': './monaco-editor/min/vs' } });
-    require.config({
-        'vs/nls': {
-            availableLanguages: {
-                '*': 'zh-cn'
+
+    // Set monaco to Chinese if UI locale is zh-CN, otherwise use default lang (en-US)
+    if (chrome.i18n.getUILanguage() === 'zh-CN') {
+        require.config({
+            'vs/nls': {
+                availableLanguages: {
+                    '*': 'zh-cn'
+                }
+            }
+        });
+    }
+
+    function localizeHtmlPage() {
+        // Localize by replacing __MSG_***__ meta tags
+        var objects = document.getElementsByTagName('html');
+        for (var j = 0; j < objects.length; j++) {
+            var obj = objects[j];
+
+            var valStrH = obj.innerHTML.toString();
+            var valNewH = valStrH.replace(/__MSG_(\w+)__/g, function (match, v1) {
+                return v1 ? chrome.i18n.getMessage(v1) : "";
+            });
+
+            if (valNewH != valStrH) {
+                obj.innerHTML = valNewH;
             }
         }
-    });
+    }
+
+    localizeHtmlPage();
 
     const mutationCb = mutationsList => {
         mutationsList.forEach(list => {
@@ -21,14 +44,9 @@
                         let text = decodeURIComponent(editor.previousElementSibling.textContent);
                         if (text) {
                             editor.previousElementSibling.textContent = '';
-                            let lang = 'html';
                             try {
                                 text = JSON.stringify(JSON.parse(text), null, 4);
-                                lang = 'json';
-                            } catch (err) {
-                                // console.error('接口返回不是JSON格式！', err);
-                                lang = 'html';
-                            }
+                            } catch (err) { }
                             require(['vs/editor/editor.main'], () => {
                                 monaco.editor.defineTheme('serverlogTheme', {
                                     base: 'vs',
@@ -40,7 +58,7 @@
                                 });
 
                                 const mnc = monaco.editor.create(editor, {
-                                    language: lang,
+                                    language: 'json',
                                     value: text,
                                     // contextmenu: false,
                                     scrollBeyondLastLine: false,
@@ -50,10 +68,10 @@
                                     theme: 'serverlogTheme'
                                 });
 
-                                // 格式化代码
+                                // Format code
                                 setTimeout(() => {
                                     mnc.getAction('editor.action.formatDocument').run().then(() => {
-                                        // 格式化结束之后，再去设置只读
+                                        // After formatted, set readonly
                                         mnc.updateOptions({
                                             readOnly: true
                                         });
@@ -68,7 +86,7 @@
         });
     }
 
-    // 监听新的日志
+    // Listen for new logs
     const observer = new MutationObserver(mutationCb);
     observer.observe(getEl('#logs'), {
         attributes: false,
@@ -76,10 +94,30 @@
         subtree: false
     });
 
-    // 禁用右键
+    // disable contextmenu
     window.document.addEventListener('contextmenu', e => {
-        // e.preventDefault();
+        e.preventDefault();
     });
+
+    getEl('#btnWhat')
+        .addEventListener('click', () => {
+            let url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log#what-is-secret-key';
+            if (chrome.i18n.getUILanguage() === 'zh-CN') {
+                url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log/README_zh.md#什么是-secret-key';
+            }
+            chrome.tabs.create({ url });
+        });
+
+    getEl('#btnSave')
+        .addEventListener('click', () => {
+            const el = getEl('#extkey');
+            const key = el.value.trim();
+            if (!key) {
+                return el.focus();
+            }
+            localStorage.serverlog_key = key;
+            document.body.classList.remove('enterKey');
+        });
 
     getEl('#clear')
         .addEventListener('click', () => {
@@ -91,6 +129,14 @@
                 .textContent = '';
         });
 
+    getEl('#settings')
+        .addEventListener('click', () => {
+            const el = document.querySelector('#extkey');
+            el.value = localStorage.serverlog_key;
+            document.body.classList.add('enterKey');
+            el.focus();
+        });
+
     const filterLogs = function () {
         const keyword = getEl('#search')
             .value.replace(/(^\s*)|(\s*$)/g, '');
@@ -99,7 +145,7 @@
         let hiddenCount = 0;
         document.querySelectorAll('#logs li.log-li')
             .forEach(li => {
-                // 判断 level
+                // Check level
                 let matchLevel = true;
                 const logLevel = li.classList.length > 0 ? li.classList[0] : 'info';
                 switch (selectLevel) {
@@ -125,7 +171,7 @@
                 }
             });
 
-        // 没有筛选结果时提示
+        // If no filter result
         const totalCount = Number(getEl('#total-count').textContent);
         if (totalCount > 0 && totalCount === hiddenCount) {
             getEl('#no-data').style.display = 'block';
@@ -135,7 +181,7 @@
 
         if (hiddenCount > 0) {
             getEl('#filter-info')
-                .textContent = `（${hiddenCount}条日志被筛选隐藏）`;
+                .textContent = ` (${hiddenCount} ${chrome.i18n.getMessage("hiddenByFilter")})`;
         } else {
             getEl('#filter-info')
                 .textContent = '';
@@ -150,10 +196,10 @@
     getEl('.level-wrap')
         .addEventListener('click', e => {
             const target = e.target;
-            if (e.target.id) {
+            if (target.id) {
                 document.querySelectorAll('.level-wrap div')
                     .forEach(el => el.classList.remove('active'));
-                e.target.classList.add('active');
+                target.classList.add('active');
                 filterLogs();
             }
         });
@@ -169,19 +215,19 @@
                 let log = e.target.previousElementSibling.textContent;
                 log = log.replace(time, `[${time}] `).replace(reqId, `${reqId} `);
                 copyTextToClipboard(log);
-                e.target.textContent = '已完成';
+                e.target.textContent = chrome.i18n.getMessage("copied");
                 setTimeout(() => {
-                    e.target.textContent = '复制';
+                    e.target.textContent = chrome.i18n.getMessage("copy");
                     e.target.classList.remove('copied');
                     e.target.classList.add('copy');
                 }, 800);
             } else if (e.target.classList.contains('link')) {
-                // 按住Ctrl键才跳转
+                // Redirect when press Ctrl
                 if (e.ctrlKey) {
                     chrome.tabs.create({ url: e.target.dataset.link });
                 }
-            } else if (e.target.classList.contains('full-link') || e.target.classList.contains('icon-full-screen') || e.target.classList.contains('span-full')) {
-                // 代码全屏
+            } else if (e.target.classList.contains('full-link') || e.target.classList.contains('iconfull-screen') || e.target.classList.contains('span-full')) {
+                // Full screen
                 let respContent = e.target.parentElement.parentElement;
                 if (!e.target.classList.contains('full-link')) {
                     respContent = e.target.parentElement.parentElement.parentElement;
@@ -191,11 +237,11 @@
                         document.body.classList.add('noscroll');
                         respContent.classList.add('full');
                         respContent.querySelector('.editor').style.height = (window.innerHeight - 34) + 'px';
-                        respContent.querySelector('.full-link span').textContent = '退出全屏';
+                        respContent.querySelector('.full-link span').textContent = chrome.i18n.getMessage("exitfull");
                     } else {
                         respContent.classList.remove('full');
                         respContent.querySelector('.editor').style.height = '180px';
-                        respContent.querySelector('.full-link span').textContent = '全屏';
+                        respContent.querySelector('.full-link span').textContent = chrome.i18n.getMessage("full");
                         document.body.classList.remove('noscroll');
                     }
                 }
@@ -205,7 +251,7 @@
     getEl('#logs')
         .addEventListener('mouseover', e => {
             if (e.target.classList.contains('link')) {
-                // 按住Ctrl键显示手状
+                // Show hand when press Ctrl
                 if (e.ctrlKey) {
                     e.target.style.cursor = 'pointer';
                 }
@@ -228,33 +274,42 @@
 
     const currVersionNumber = getNumVersion(chrome.app.getDetails().version);
     const version = `v${chrome.app.getDetails().version}`;
-    getEl('#curr-version').innerHTML = `<a href="http://10.200.5.103/h5_tools/chrome-extension-server-log/tags/${version}" target="_blank">${version}</a>`;
+    getEl('#curr-version').innerHTML = `<a href="https://github.com/eshengsky/ServerLog/releases/tag/${version}" target="_blank">${version}</a>`;
 
     checkUpdate();
 
+    function noUpdate() {
+        getEl('#update-info').classList.add('has-check');
+        getEl('#update-info').classList.add('no-update');
+        getEl('#update-info').innerHTML = `${chrome.i18n.getMessage("noUpdates")} <i class="iconfont iconupdate" id="check-now" title="${chrome.i18n.getMessage("checkUpdates")}"></i>`;
+    }
+
     function checkUpdate() {
         getEl('#update-info').classList.remove('has-check');
-        getEl('#update-info').innerHTML = '检查更新中...';
+        getEl('#update-info').innerHTML = chrome.i18n.getMessage("checkUpdating");
         const startTime = Date.now();
         const timeout = 2000;
         const xhr = new XMLHttpRequest();
         function done() {
-            const data = JSON.parse(xhr.responseText);
-            data.sort((v1, v2) => {
-                return getNumVersion(v2.name) - getNumVersion(v1.name)
-            });
-            const latestVersion = data[0].name;
-            const latestVersionNumber = getNumVersion(data[0].name);
-            if (latestVersionNumber > currVersionNumber) {
-                // 有更新
-                getEl('#update-info').classList.add('has-update');
-                getEl('#update-info').innerHTML = `<a href="http://10.200.5.103/h5_tools/chrome-extension-server-log/tags/${latestVersion}" target="_blank">检测到新版本${latestVersion}</a>`;
-            } else {
-                // 没有更新
-                getEl('#update-info').classList.add('has-check');
-                getEl('#update-info').classList.add('no-update');
-                getEl('#update-info').innerHTML = '没有更新版本 <i class="iconfont icon-update" id="check-now" title="检查更新"></i>';
+            try {
+                const data = JSON.parse(xhr.responseText);
+                data.sort((v1, v2) => {
+                    return getNumVersion(v2.tag_name) - getNumVersion(v1.tag_name)
+                });
+                const latestVersion = data[0].tag_name;
+                const latestVersionNumber = getNumVersion(data[0].tag_name);
+                if (latestVersionNumber > currVersionNumber) {
+                    // Has updates
+                    getEl('#update-info').classList.add('has-update');
+                    getEl('#update-info').innerHTML = `<a href="https://github.com/eshengsky/ServerLog/releases/tag/${latestVersion}" target="_blank">${chrome.i18n.getMessage("checkedNew")}${latestVersion}</a>`;
+                } else {
+                    // No updates
+                    noUpdate();
+                }
+            } catch (err) {
+                noUpdate();
             }
+
         }
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -271,7 +326,7 @@
                 }
             }
         };
-        xhr.open('GET', 'http://10.200.5.103/api/v3/projects/608/repository/tags?private_token=s8bzXudzKMAumApMqYXS', true);
+        xhr.open('GET', 'https://api.github.com/repos/eshengsky/ServerLog/releases', true);
         xhr.send();
     }
 
@@ -306,7 +361,6 @@
         try {
             document.execCommand('copy');
         } catch (err) {
-            console.error('复制出错了！', err);
         }
 
         document.body.removeChild(textArea);

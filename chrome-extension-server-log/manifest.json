@@ -1,6 +1,6 @@
 {
     "name": "ServerLog",
-    "description": "Display server side logs in Chrome dev tools (F12).",
+    "description": "__MSG_description__",
     "version": "1.0.0",
     "background": {
         "scripts": [
@@ -26,5 +26,6 @@
         "*://*/*"
     ],
     "devtools_page": "devtools.html",
+    "default_locale": "en_US",
     "manifest_version": 2
 }

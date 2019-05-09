@@ -6,31 +6,16 @@
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./monaco-editor/min/vs/editor/editor.main.css">
     <link rel="stylesheet" href="./css/panel.css">
-    <style>
-        ul:empty:after {
-            content: ' 等待接收请求...\A 在控制台发起请求或按 F5 刷新页面';
-            color: #777;
-            font-size: 14px;
-            display: block;
-            position: absolute;
-            left: 50%;
-            width: 300px;
-            margin-left: -150px;
-            top: 50%;
-            margin-top: -22px;
-            white-space: pre;
-            text-align: center;
-            line-height: 2;
-        }
-    </style>
 </head>
 
 <body>
     <div class="key-section">
         <div class="mask"></div>
         <div class="keypanel">
+            <h3>__MSG_setSecretKey__</h3>
             <input id="extkey" placeholder="your secret key">
-            <button>Save</button>
+            <button id="btnSave">__MSG_save__</button>
+            <p><a id="btnWhat">__MSG_whatIs__</a></p>
         </div>
     </div>
     <div class="log-section">
@@ -38,50 +23,49 @@
             <span id="record">
                 <i class="fa fa-circle"></i>
             </span>
-            <span id="clear" title="清空日志">
-                <i class="iconfont icon-clearup"></i>
+            <span id="clear" title="__MSG_clear__">
+                <i class="iconfont iconclearup"></i>
             </span>
             <span id="split">&nbsp;</span>
             <div class="search-wrap">
                 <label id="search-icon" for="search">
-                    <i class="iconfont icon-search1187938easyiconnet"></i>
+                    <i class="iconfont iconsearch1187938easyiconnet"></i>
                 </label>
-                <input id="search" type="search" placeholder="日志关键字">
+                <input id="search" type="search" placeholder="__MSG_keywords__">
             </div>
 
-            <label>日志级别</label>
+            <label>__MSG_level__</label>
             <div class="level-wrap">
-                <div title="信息" id="info" class="active"></div>
-                <div title="警告" id="warn"></div>
-                <div title="错误" id="error"></div>
+                <div title="__MSG_info__" id="info" class="active"></div>
+                <div title="__MSG_warn__" id="warn"></div>
+                <div title="__MSG_error__" id="error"></div>
             </div>
 
-            <div class="custom-control custom-checkbox" title="页面刷新或重新导航时不清除已有日志">
+            <div class="custom-control custom-checkbox" title="__MSG_preserve1__">
                 <input class="custom-control-input" id="check-preserve" type="checkbox">
-                <label class="custom-control-label" for="check-preserve">保持日志</label>
+                <label class="custom-control-label" for="check-preserve">__MSG_preserve2__</label>
             </div>
-            <div class="custom-control custom-checkbox" title="有新的日志时自动滚动到底部">
+            <div class="custom-control custom-checkbox" title="__MSG_scroll1__">
                 <input class="custom-control-input" id="check-scroll" type="checkbox" checked>
-                <label class="custom-control-label" for="check-scroll">自动滚屏</label>
+                <label class="custom-control-label" for="check-scroll">__MSG_scroll2__</label>
             </div>
-            <span id="settings" title="设置" style="display: none;">
-                <i class="iconfont icon-mzicon-setting"></i>
+            <span id="settings" title="__MSG_setSecretKey__">
+                <i class="iconfont iconkey"></i>
             </span>
             <span id="filter-info"></span>
-            <span id="count-info">当前共<i id="total-count">0</i>条日志</span>
+            <span id="count-info">__MSG_total__<i id="total-count">0</i>__MSG_pieces__</span>
         </header>
         <ul id="logs"></ul>
-        <div id="no-data">无筛选结果</div>
+        <div id="no-data">__MSG_nodata__</div>
         <footer>
             <span class="desc">
-                <a class="line-link" href="http://10.200.5.103/h5_tools/chrome-extension-server-log"
+                <a class="line-link" href="https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log"
                     target="_blank">Code</a> with
-                <i class="iconfont icon-love" title="love"></i> by
+                <i class="iconfont iconlove" title="love"></i> by
                 <a class="line-link" href="https://github.com/eshengsky" target="_blank">Sky</a>
             </span>
-            <span id="user-name" style="display: none;"></span>
             <div id="version-info">
-                <span>当前版本</span><span id="curr-version"></span>，<span id="update-info">检查更新中...</span>
+                <span>__MSG_version__</span><span id="curr-version"></span>, <span id="update-info">__MSG_checkUpdating__</span>
             </div>
         </footer>
     </div>

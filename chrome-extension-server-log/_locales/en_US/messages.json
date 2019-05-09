@@ -1,0 +1,125 @@
+{
+    "enable": {
+        "message": "Enable ServerLog"
+    },
+
+    "setSecretKey": {
+        "message": "Set Secret Key"
+    },
+
+    "save": {
+        "message": "Save"
+    },
+
+    "whatIs": {
+        "message": "What is Secret Key?"
+    },
+
+    "clear": {
+        "message": "Clear logs"
+    },
+
+    "keywords": {
+        "message": "Filter"
+    },
+
+    "level": {
+        "message": "Level"
+    },
+
+    "info": {
+        "message": "Info"
+    },
+
+    "warn": {
+        "message": "Warnings"
+    },
+
+    "error": {
+        "message": "Errors"
+    },
+
+    "preserve1": {
+        "message": "Do not clear log on page reload / navigation"
+    },
+
+    "preserve2": {
+        "message": "Preserve log"
+    },
+
+    "scroll1": {
+        "message": "Scroll to the bottom automatically when new logs are available"
+    },
+
+    "scroll2": {
+        "message": "Auto scroll"
+    },
+
+    "total": {
+        "message": "Total"
+    },
+
+    "pieces": {
+        "message": "log(s)"
+    },
+
+    "nodata": {
+        "message": "No filter results"
+    },
+
+    "version": {
+        "message": "Version"
+    },
+
+    "hiddenByFilter": {
+        "message": "logs are hidden by filter"
+    },
+
+    "copy": {
+        "message": "Copy"
+    },
+
+    "copied": {
+        "message": "Copied"
+    },
+
+    "full": {
+        "message": "Full screen"
+    },
+
+    "exitfull": {
+        "message": "Exit full screen"
+    },
+
+    "noUpdates": {
+        "message": "No update"
+    },
+
+    "checkUpdates": {
+        "message": "Check for updates"
+    },
+
+    "checkUpdating": {
+        "message": "Checking for updates..."
+    },
+
+    "checkedNew": {
+        "message": "New version detected"
+    },
+
+    "reqId": {
+        "message": "Req ID"
+    },
+
+    "waiting": {
+        "message": "Waiting for receive log...\\A Perform a request or hit F5 to reload current page."
+    },
+
+    "withCtrl": {
+        "message": "Ctrl + click to follow link"
+    },
+
+    "description": {
+        "message": "Display server side logs in Chrome dev tools (F12)."
+    }
+}

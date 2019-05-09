@@ -4,6 +4,7 @@ const serverlog = require('../index');
 serverlog.config({
     console: {
         colors: true,
+        depth: null,
         appendUrl: true,
         forceSingleLine: false
     },
@@ -12,9 +13,8 @@ serverlog.config({
         key: '111'
     }
 })
-const logger = serverlog.getLogger();
-
 app.use(serverlog.middleware());
+const logger = serverlog.getLogger();
 
 app.use('/list', require('./routes/list'));
 

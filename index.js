@@ -8,6 +8,7 @@ const loggers = [];
 let options = {
     console: {
         colors: true,
+        depth: null,
         appendUrl: true,
         forceSingleLine: false
     },
@@ -47,7 +48,6 @@ function middleware() {
         // Set unique request id to combine logs
         const reqId = req.query.__id || req.get(reqIdName) || shortid.generate();
         req.__id = reqId;
-        res.locals.__id = reqId;
         res.setHeader(reqIdName, reqId);
 
         // rewrite logger.xxx to append req object

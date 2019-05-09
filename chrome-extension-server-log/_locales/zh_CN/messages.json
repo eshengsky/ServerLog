@@ -1,0 +1,125 @@
+{
+    "enable": {
+        "message": "启用 ServerLog"
+    },
+
+    "setSecretKey": {
+        "message": "设置 Secret Key"
+    },
+
+    "save": {
+        "message": "保存"
+    },
+
+    "whatIs": {
+        "message": "什么是 Secret Key？"
+    },
+
+    "clear": {
+        "message": "清空日志"
+    },
+
+    "keywords": {
+        "message": "日志关键字"
+    },
+
+    "level": {
+        "message": "日志级别"
+    },
+
+    "info": {
+        "message": "信息"
+    },
+
+    "warn": {
+        "message": "警告"
+    },
+
+    "error": {
+        "message": "错误"
+    },
+
+    "preserve1": {
+        "message": "页面刷新或重新导航时不清除已有日志"
+    },
+
+    "preserve2": {
+        "message": "保持日志"
+    },
+
+    "scroll1": {
+        "message": "有新的日志时自动滚动到底部"
+    },
+
+    "scroll2": {
+        "message": "自动滚屏"
+    },
+
+    "total": {
+        "message": "当前共"
+    },
+
+    "pieces": {
+        "message": "条日志"
+    },
+
+    "nodata": {
+        "message": "无筛选结果"
+    },
+
+    "version": {
+        "message": "当前版本"
+    },
+
+    "hiddenByFilter": {
+        "message": "条日志被筛选隐藏"
+    },
+
+    "copy": {
+        "message": "复制"
+    },
+
+    "copied": {
+        "message": "已完成"
+    },
+
+    "full": {
+        "message": "全屏"
+    },
+
+    "exitfull": {
+        "message": "退出全屏"
+    },
+
+    "noUpdates": {
+        "message": "没有更新"
+    },
+
+    "checkUpdates": {
+        "message": "检查更新"
+    },
+
+    "checkUpdating": {
+        "message": "检查更新中..."
+    },
+
+    "checkedNew": {
+        "message": "检测到新版本"
+    },
+
+    "reqId": {
+        "message": "请求ID"
+    },
+
+    "waiting": {
+        "message": "等待接收日志...\\A 在控制台发起请求或按 F5 刷新页面"
+    },
+
+    "withCtrl": {
+        "message": "按住Ctrl并单击可访问链接"
+    },
+
+    "description": {
+        "message": "在 Chrome 开发者工具（F12）中查看服务端日志。"
+    }
+}
