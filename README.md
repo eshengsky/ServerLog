@@ -223,6 +223,26 @@ If you can listen to a network request for a page, the response header `X-Reques
 X-Request-Id: Ra8dx5lAL
 ```
 
+## Persistence
+
+ServerLog only output to [stdout](https://nodejs.org/dist/latest-v10.x/docs/api/process.html#process_process_stdout) and [stderr](https://nodejs.org/dist/latest-v10.x/docs/api/process.html#process_process_stderr), does not provide the ability to log persistence, but you can do so in other ways:
+
+* Use PM2
+
+If you deploy your project with [PM2](https://pm2.io/), logs will automatically save to the disk file. You can use PM2's own [log management](https://pm2.io/doc/en/runtime/guide/log-management/) function to achieve log viewing, rotate, and so on.
+
+By default, log file saved into `$HOME/.pm2/logs` directory.
+
+* Common
+
+In a Linux environment, it is easy to redirect the output to a file with very simple commands, such as:
+
+```bash
+node server.js > logfile.txt
+```
+
+Specific can be referred [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file)。
+
 ## License
 MIT License
 

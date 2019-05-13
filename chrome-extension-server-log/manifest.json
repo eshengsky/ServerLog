@@ -23,7 +23,8 @@
         "tabs",
         "webRequest",
         "webRequestBlocking",
-        "*://*/*"
+        "http://*/",
+        "https://*/"
     ],
     "devtools_page": "devtools.html",
     "default_locale": "en_US",

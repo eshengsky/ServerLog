@@ -220,6 +220,26 @@ logger.infoC('read data from local file, please view data in Chrome extension.')
 X-Request-Id: Ra8dx5lAL
 ```
 
+## 日志持久化
+
+ServerLog 只会将日志输出到 [stdout](https://nodejs.org/dist/latest-v10.x/docs/api/process.html#process_process_stdout) 和 [stderr](https://nodejs.org/dist/latest-v10.x/docs/api/process.html#process_process_stderr)，并没有提供日志持久化的功能，但你可以通过一些别的方式来实现：
+
+* 使用 PM2
+
+如果你是通过 [PM2](https://pm2.io/) 部署的项目，日志会自动保存到磁盘文件中。你可以使用 PM2 自带的 [日志管理](https://pm2.io/doc/en/runtime/guide/log-management/) 功能实现日志的查看、分割等。
+
+默认情况下，日志文件会保存在 `$HOME/.pm2/logs` 目录下。
+
+* 通用方式
+
+在 linux 环境下，通过很简单的命令就可以方便地将输出转存到文件中，例如：
+
+```bash
+node server.js > logfile.txt
+```
+
+具体可以参考 [这里](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file)。
+
 ## 许可
 MIT License
 
