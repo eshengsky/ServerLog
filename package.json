@@ -1,6 +1,6 @@
 {
   "name": "serverlog-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple, practical and creative logging library, with a Chrome extension support.",
   "main": "index.js",
   "scripts": {
