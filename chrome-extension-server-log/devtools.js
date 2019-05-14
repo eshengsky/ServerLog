@@ -107,12 +107,7 @@ function requestHandler(request) {
                     }
 
                     // wrap link into ankle
-                    const linkMatch = msgStr.match(/(https?:\/\/|www\.)[-a-zA-Z0-9@:%_\+.~#?&//=\u4e00-\u9fa5]+/g);
-                    if (linkMatch && linkMatch.length > 0) {
-                        linkMatch.forEach(link => {
-                            msgStr = msgStr.replace(link, `<span class="link" data-link="${link}" title="${chrome.i18n.getMessage("withCtrl")}">${link}</span>`);
-                        });
-                    }
+                    msgStr = msgStr.replace(/(https?:\/\/|www\.)[-a-zA-Z0-9@:%_\+.~#?&//=\u4e00-\u9fa5]+/g, `<span class="link" data-link="$&" title="${chrome.i18n.getMessage("withCtrl")}">$&</span>`);
 
                     if (Object.keys(tempObj).length) {
                         for (let key in tempObj) {
