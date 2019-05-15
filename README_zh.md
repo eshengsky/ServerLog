@@ -131,6 +131,12 @@ serverlog.config({
         <td>string</td>
         <td>yourownsecretkey</td>
     </tr>
+    <tr>
+        <td>extension.maxLength</td>
+        <td>日志的最大长度，单位kb</td>
+        <td>number</td>
+        <td>80</td>
+    </tr>
 </table>
 
 ### middleware()

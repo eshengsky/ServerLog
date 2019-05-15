@@ -1,5 +1,5 @@
 const shortid = require('shortid');
-const Logger = require('./logger');
+const { Logger, ServerLogSuffix } = require('./logger');
 
 const reqIdName = 'X-Request-Id';
 const loggers = [];
@@ -8,14 +8,14 @@ const loggers = [];
 let options = {
     console: {
         colors: true,
-        depth: null,
+        depth: 8,
         appendUrl: true,
         forceSingleLine: false
     },
     extension: {
         enable: true,
         key: 'yourownsecretkey',
-        maxLength: 80 * 1024
+        maxLength: 80
     }
 };
 
@@ -50,13 +50,15 @@ function middleware() {
         req.__id = reqId;
         res.setHeader(reqIdName, reqId);
 
+        const serverLogSuffix = new ServerLogSuffix(req, res);
+
         // rewrite logger.xxx to append req object
         logLevels.forEach(level => {
             Logger.prototype[level] = function (...args) {
                 if (!args.length) {
                     args.push(undefined);
                 }
-                args.push(req);
+                args.push(serverLogSuffix);
                 originalLogger[level].apply(this, args);
             };
 
@@ -64,7 +66,7 @@ function middleware() {
                 if (!args.length) {
                     args.push(undefined);
                 }
-                args.push(req);
+                args.push(serverLogSuffix);
                 originalConLogger[level].apply(this, args);
             };
 
@@ -72,7 +74,7 @@ function middleware() {
                 if (!args.length) {
                     args.push(undefined);
                 }
-                args.push(req);
+                args.push(serverLogSuffix);
                 originalExtLogger[level].apply(this, args);
             };
         });

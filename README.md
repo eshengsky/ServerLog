@@ -130,9 +130,15 @@ The full parameters supported are as follows:
     </tr>
     <tr>
         <td>extension.key</td>
-        <td>the key set here will not output the log until the same as the secret key set in the Chrome extension</td>
+        <td>The key set here will not output the log until the same as the secret key set in the Chrome extension</td>
         <td>string</td>
         <td>yourownsecretkey</td>
+    </tr>
+    <tr>
+        <td>extension.maxLength</td>
+        <td>Max length of logs, in kb units</td>
+        <td>number</td>
+        <td>80</td>
     </tr>
 </table>
 

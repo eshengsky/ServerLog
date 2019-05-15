@@ -54,17 +54,21 @@ Logger.prototype = {
     _log2Console: function (level, args, now = moment().format('YYYY-MM-DD HH:mm:ss.SSS')) {
         if (!args.length) {
             args.push(undefined);
-        } else if (args.length > 1) {
-            const lastParam = args[args.length - 1];
-            if (lastParam && lastParam.constructor && lastParam.constructor.name === 'IncomingMessage') {
-                const req = args.pop();
+        }
+
+        const newArgs = [];
+        const len = args.length;
+        args.forEach((msg, index) => {
+            if (len > 1 && index === len - 1 && msg instanceof ServerLogSuffix) {
+                // If last param is ServerLogSuffix
+                const { req } = msg;
 
                 if (req.__id) {
                     let reqIdStr = `{${req.__id}}`;
                     if (this.options.console.colors) {
                         reqIdStr = chalk.grey(reqIdStr);
                     }
-                    args.unshift(reqIdStr);
+                    newArgs.unshift(reqIdStr);
                 }
 
                 if (this.options.console.appendUrl) {
@@ -72,37 +76,34 @@ Logger.prototype = {
                     if (this.options.console.colors) {
                         urlStr = chalk.grey(urlStr);
                     }
-                    args.push(urlStr);
-                }
-            }
-        }
-
-        const newArgs = [];
-        args.forEach(msg => {
-            if (typeof msg === 'object') {
-                if (msg instanceof Error) {
-                    let errStr = msg.message;
-                    if (msg.stack) {
-                        errStr = msg.stack;
-                    }
-                    if (this.options.console.forceSingleLine) {
-                        errStr = errStr.replace(breakLineReg, ' ');
-                    }
-                    newArgs.push(errStr);
-                } else {
-                    const inspectOpt = {
-                        depth: this.options.depth
-                    }
-                    if (this.options.console.colors) {
-                        inspectOpt.colors = true;
-                    }
-                    if (this.options.console.forceSingleLine) {
-                        inspectOpt.breakLength = Infinity;
-                    }
-                    newArgs.push(util.inspect(msg, inspectOpt));
+                    newArgs.push(urlStr);
                 }
             } else {
-                newArgs.push(msg);
+                if (typeof msg === 'object') {
+                    if (msg instanceof Error) {
+                        let errStr = msg.message;
+                        if (msg.stack) {
+                            errStr = msg.stack;
+                        }
+                        if (this.options.console.forceSingleLine) {
+                            errStr = errStr.replace(breakLineReg, ' ');
+                        }
+                        newArgs.push(errStr);
+                    } else {
+                        const inspectOpt = {
+                            depth: this.options.depth
+                        }
+                        if (this.options.console.colors) {
+                            inspectOpt.colors = true;
+                        }
+                        if (this.options.console.forceSingleLine) {
+                            inspectOpt.breakLength = Infinity;
+                        }
+                        newArgs.push(util.inspect(msg, inspectOpt));
+                    }
+                } else {
+                    newArgs.push(msg);
+                }
             }
         });
 
@@ -136,8 +137,8 @@ Logger.prototype = {
             args.push(undefined);
         } else if (args.length > 1) {
             const lastParam = args[args.length - 1];
-            if (lastParam && lastParam.constructor && lastParam.constructor.name === 'IncomingMessage') {
-                const req = args.pop();
+            if (lastParam instanceof ServerLogSuffix) {
+                const { req, res } = args.pop();
 
                 if (req.__id) {
                     args.unshift(`{${req.__id}}`);
@@ -147,13 +148,12 @@ Logger.prototype = {
                 // check chrome extension secret key
                 if (req.get(reqHeaderName) === this.options.extension.key) {
                     try {
-                        // 响应头设置
-                        const currentHeader = req.res.get(resHeaderName);
+                        const currentHeader = res.get(resHeaderName);
 
-                        // 将数组转为字符串形式显示
+                        // Convert array to string
                         let msgStr = '';
                         args.forEach((msg, index) => {
-                            // 错误对象
+                            // Error object
                             if (msg instanceof Error) {
                                 if (msg.stack.indexOf(msg.message) >= 0) {
                                     msgStr += msg.stack.replace(breakLineReg, '<br>')
@@ -189,16 +189,16 @@ Logger.prototype = {
                             msgToSet = lzstring.compressToEncodedURIComponent(JSON.stringify(msgArr));
                         }
 
-                        // nginx对响应头长度做了限制，如果大于设定值就仅返回一行提示
-                        if (msgToSet.length > this.options.extension.maxLength) {
-                            req.res.set(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
+                        // Max length limit
+                        if (msgToSet.length > Number(this.options.extension.maxLength) * 1024) {
+                            res.set(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
                                 time: now,
                                 type: 'warn',
                                 category: 'Server Log',
-                                message: `日志太多了 (${parseInt(msgToSet.length / 1024)}KB)，暂不支持直接展示！`
+                                message: `The logs are too much (${parseInt(msgToSet.length / 1024)}KB), cannot view them now.`
                             }])));
                         } else {
-                            req.res.set(resHeaderName, msgToSet);
+                            res.set(resHeaderName, msgToSet);
                         }
                     } catch (e) {
                         console.error(e);
@@ -211,8 +211,7 @@ Logger.prototype = {
     // print both in console and Chrome extension
     _log: function (level, args) {
         const now = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
-        const cloned = [...args];
-        this._log2Console(level, cloned, now);
+        this._log2Console(level, args, now);
         this._log2Extension(level, args, now, false);
     }
 }
@@ -232,4 +231,14 @@ logLevels.forEach(level => {
     }
 });
 
-module.exports = Logger;
+class ServerLogSuffix {
+    constructor(req, res) {
+        this.req = req;
+        this.res = res;
+    }
+}
+
+module.exports = {
+    Logger,
+    ServerLogSuffix
+}

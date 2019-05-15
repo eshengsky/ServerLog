@@ -5,7 +5,7 @@ const serverlog = require('../../index');
 const logger = serverlog.getLogger('home');
 
 router.get('/', (req, res) => {
-    logger.info('This is an info log.');
+    logger.info(`This is an info log, current url: ${req.protocol}://${req.get('Host')}${req.originalUrl}`);
     
     let undef;
     logger.warn('This is a warning log.', 'Take care, undef value is:', undef);

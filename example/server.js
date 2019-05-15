@@ -4,13 +4,14 @@ const serverlog = require('../index');
 serverlog.config({
     console: {
         colors: true,
-        depth: null,
+        depth: 8,
         appendUrl: true,
         forceSingleLine: false
     },
     extension: {
         enable: true,
-        key: '111'
+        key: '111',
+        maxLength: 80
     }
 })
 app.use(serverlog.middleware());
