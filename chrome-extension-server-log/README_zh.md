@@ -15,7 +15,7 @@ Chrome 浏览器扩展插件，用于在 F12 开发者工具中查看服务端�
 
 ## 安装
 
-[从Chrome网上应用商店安装]()
+[从Chrome网上应用商店安装](https://chrome.google.com/webstore/detail/serverlog/ghmhlknahaejhdlobgpaoocmjlhgmcci)
 
 如果你无法访问 Chrome 应用商店，也可以按如下步骤下载安装：
 

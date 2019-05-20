@@ -17,7 +17,7 @@ This extension is part of [ServerLog](https://github.com/eshengsky/ServerLog), b
 
 ## Install
 
-[Install from Chrome Web Store]()
+[Install from Chrome Web Store](https://chrome.google.com/webstore/detail/serverlog/ghmhlknahaejhdlobgpaoocmjlhgmcci)
 
 If you can't access the Chrome Web Store, you can download and install it as follows:
 
