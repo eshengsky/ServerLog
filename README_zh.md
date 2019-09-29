@@ -1,5 +1,5 @@
 # ServerLog
-简单、实用、创新的 node.js 日志库，支持在 Chrome 扩展程序中查看请求日志。
+简单、实用、创新的 node.js 日志库，支持在 Chrome 扩展程序和浏览器 Console 中查看服务端日志。
 
 ServerLog 包含了如下特性：
 
@@ -7,17 +7,21 @@ ServerLog 包含了如下特性：
 * 支持 `info`，`warn`，`error` 3 种日志级别，尽可能简单的 api 设计；
 * 通过注册 [Express](http://expressjs.com/) 中间件，可以自动附加请求 URL 到日志末尾；
 * 同一批次请求产生的日志，会生成一个 [请求ID](#请求ID)，方便日志的关联和筛选；
-* 配套的 Chrome 扩展程序允许你在开发者工具中查看日志。
+* 配套的 Chrome 扩展程序允许你在开发者工具和浏览器 Console 中查看与请求相关联的日志。
 
 ## 预览
 
-* 输出到终端：
+* 打印到终端：
 
-![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/preview_console_zh.png)
+![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/preview_terminal.png)
 
-* 输出到 Chrome 扩展：
+* 打印到 Chrome 扩展：
 
 ![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_ext_zh.png)
+
+* 打印到浏览器 Console：
+
+![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_console.png)
 
 ## 快速开始
 
@@ -249,7 +253,7 @@ node server.js > logfile.txt
 ## 许可
 MIT License
 
-Copyright (c) 2019 孙正华 Sky
+Copyright (c) 2019 Sky.Sun
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

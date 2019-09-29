@@ -3,6 +3,10 @@
         "message": "启用 ServerLog"
     },
 
+    "console": {
+        "message": "在浏览器Console中打印日志"
+    },
+
     "setSecretKey": {
         "message": "设置 Secret Key"
     },
@@ -120,6 +124,6 @@
     },
 
     "description": {
-        "message": "在 Chrome 开发者工具（F12）中查看服务端日志。"
+        "message": "在 Chrome 开发者工具和浏览器 Console 中查看服务端日志。"
     }
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const serverlog = require('../../index');
+const serverlog = require('../../src/index');
 const logger = serverlog.getLogger('home');
 
 router.get('/', (req, res) => {
@@ -65,7 +65,8 @@ router.get('/', (req, res) => {
             logger.error('get data failed, statusCode:', resp.statusCode);
         }
 
-        res.send('Hello Server Log!');
+        res.send(`Hello Server Log!<br><br>
+        Press Ctrl+Shift+I to open dev tools, you can view the server side logs in both Console panel and ServerLog panel.`);
     })
 });
 

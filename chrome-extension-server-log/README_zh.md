@@ -1,17 +1,24 @@
 # chrome-extension-server-log
 
-Chrome 浏览器扩展插件，用于在 F12 开发者工具中查看服务端日志。
+Chrome 浏览器扩展插件，用于在 Chrome 开发者工具和 Console 中查看服务端日志。
 
 功能特色：
 
 * 良好的日志查看体验；
 * 只会展示与你相关的日志，其他人产生的日志不会输出到你的开发者工具中。
+* 你现在可以在浏览器控制台中同时查看客户端和服务端的日志了。
 
 此扩展程序是 [ServerLog](https://github.com/eshengsky/ServerLog) 日志库的一部分，但并非仅适用于 ServerLog。在理解如下 [基本原理](#基本原理) 后，你可以尝试创建自己的日志库或改造现有的日志库，以适配此扩展。
 
 ## 预览
 
+* 打印到 Chrome 扩展：
+
 ![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_ext_zh.png)
+
+* 打印到浏览器 Console：
+
+![image](https://raw.githubusercontent.com/eshengsky/ServerLog/master/chrome-extension-server-log/preview_console.png)
 
 ## 安装
 

@@ -3,6 +3,10 @@
         "message": "Enable ServerLog"
     },
 
+    "console": {
+        "message": "Print logs in browser Console"
+    },
+
     "setSecretKey": {
         "message": "Set Secret Key"
     },
@@ -120,6 +124,6 @@
     },
 
     "description": {
-        "message": "Display server side logs in Chrome dev tools (F12)."
+        "message": "Display server side logs in Chrome dev tools and browser Console."
     }
 }

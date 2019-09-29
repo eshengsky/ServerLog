@@ -30,6 +30,12 @@ if (localStorage.serverlog_activeOn === 'on' || typeof localStorage.serverlog_ac
 }
 switcherInit(el1);
 
+const el2 = document.querySelector('#check-console');
+if (localStorage.serverlog_console === 'on' || typeof localStorage.serverlog_console === 'undefined') {
+    el2.checked = true;
+}
+switcherInit(el2);
+
 document.querySelector('#check-active')
     .addEventListener('change', evt => {
         const active = evt.target.checked;
@@ -39,4 +45,10 @@ document.querySelector('#check-active')
             chrome.browserAction.setIcon({ path: 'icon_inactive.png' });
         }
         localStorage.serverlog_activeOn = active ? 'on' : 'off';
+    });
+
+document.querySelector('#check-console')
+    .addEventListener('change', evt => {
+        const active = evt.target.checked;
+        localStorage.serverlog_console = active ? 'on' : 'off';
     });

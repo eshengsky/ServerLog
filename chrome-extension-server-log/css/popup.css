@@ -4,7 +4,7 @@ body {
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
     color: #333;
-    width: 205px;
+    width: 280px;
     margin: 0 auto;
     -webkit-user-select: none;
     user-select: none;
@@ -33,12 +33,15 @@ ul {
 }
 
 li {
-    margin: 20px 0px 20px 20px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 label {
     display: inline-block;
-    width: 130px;
+    line-height: 22px;
 }
 
 .switchery-small {
