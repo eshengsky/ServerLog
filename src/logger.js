@@ -6,7 +6,7 @@ const chalk = require('chalk');
 
 const reqHeaderName = 'X-Request-Server-Log';
 const resHeaderName = 'X-Server-Log-Data';
-const breakLineReg = new RegExp('\n', 'g');
+const breakLineReg = new RegExp('\r?\n', 'g');
 
 // let Error support JSON serialize
 if (!('toJSON' in Error.prototype)) {
