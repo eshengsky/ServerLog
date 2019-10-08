@@ -190,16 +190,19 @@ Logger.prototype = {
                             msgToSet = lzstring.compressToEncodedURIComponent(JSON.stringify(msgArr));
                         }
 
-                        // Max length limit
-                        if (msgToSet.length > Number(this.options.extension.maxLength) * 1024) {
-                            res.set(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
-                                time: now,
-                                type: 'warn',
-                                category: 'Server Log',
-                                message: `The logs are too much (${parseInt(msgToSet.length / 1024)}KB), cannot view them now.`
-                            }])));
-                        } else {
-                            res.set(resHeaderName, msgToSet);
+                        // Check if request is end
+                        if (!res.headersSent) {
+                            // Max length limit
+                            if (msgToSet.length > Number(this.options.extension.maxLength) * 1024) {
+                                res.set(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
+                                    time: now,
+                                    type: 'warn',
+                                    category: 'Server Log',
+                                    message: `The logs are too much (${parseInt(msgToSet.length / 1024)}KB), cannot view them now.`
+                                }])));
+                            } else {
+                                res.set(resHeaderName, msgToSet);
+                            }
                         }
                     } catch (e) {
                         console.error(e);
