@@ -52,36 +52,25 @@ chrome.runtime.onMessage.addListener(details => {
                 msgArr = msgArrTemp;
             }
 
-            if (console.group) {
-                let color = '';
-                switch (type) {
-                    case 'warn':
-                        color = 'orange';
-                        break;
-                    case 'error':
-                        color = 'red';
-                        break;
-                    default:
-                        color = 'DodgerBlue';
-                }
-                console.group(`%cServerLog %c${type.toUpperCase()}`, `color: ${color};`, `font-weight: normal; color: #ffffff; background: ${color}; padding: 0 3px; border-radius: 3px;`);
+            const time = new Date(logObj.time);
+            const timeStr = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${time.getMilliseconds()}`;
+
+            let color = '';
+            switch (type) {
+                case 'warn':
+                    color = 'orange';
+                    break;
+                case 'error':
+                    color = 'red';
+                    break;
+                default:
+                    color = 'DodgerBlue';
             }
-            if (console.groupCollapsed) {
-                console.groupCollapsed('General');
-                console.log('%cTime:', 'font-weight: bold;', logObj.time);
-                if (logObj.category) {
-                    console.log('%cCategory:', 'font-weight: bold;', logObj.category);
-                }
-                if (reqUrl) {
-                    console.log('%cReqURL:', 'font-weight: bold;', reqUrl);
-                }
-                console.log('%cReqID:', 'font-weight: bold;', reqId);
-                console.groupEnd();
+            let categoryName = '';
+            if (logObj.category) {
+                categoryName = ` ${logObj.category}`;
             }
-            console[type](...msgArr);
-            if (console.group) {
-                console.groupEnd();
-            }
+            console[type]('%cServerLog', `font-weight: normal; color: #ffffff; background: ${color}; padding: 1px 6px; border-radius: 30px;`, `[${timeStr}]${categoryName} -`, ...msgArr);
         });
     }
 });
