@@ -1,14 +1,14 @@
 {
   "name": "ServerLog",
   "description": "__MSG_description__",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "background": {
     "page": "background.html"
   },
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["content.js"],
+      "js": ["serverlog.js"],
       "run_at": "document_start"
     }
   ],

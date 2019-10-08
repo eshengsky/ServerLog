@@ -146,7 +146,8 @@ Logger.prototype = {
                 args.push(`(URL: ${getFullUrl(req)})`);
 
                 // check chrome extension secret key
-                if (req.get(reqHeaderName) === this.options.extension.key) {
+                const keysStr = req.get(reqHeaderName);
+                if (keysStr && keysStr.split(';').some(t => t.trim() === this.options.extension.key)) {
                     try {
                         const currentHeader = res.get(resHeaderName);
 

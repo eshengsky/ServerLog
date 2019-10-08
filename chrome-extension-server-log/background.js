@@ -4,9 +4,10 @@ chrome.webRequest.onBeforeSendHeaders.addListener(details => {
     const existsServerLog = details.requestHeaders.some(header => header.name === reqHeaderName);
     if (!existsServerLog) {
         if ((localStorage.serverlog_activeOn === 'on' || typeof localStorage.serverlog_activeOn === 'undefined') && localStorage.serverlog_key) {
+            const keys = localStorage.serverlog_key.split(/\r?\n/).join(';');
             details.requestHeaders.push({
                 name: reqHeaderName,
-                value: localStorage.serverlog_key
+                value: keys
             });
         }
     }

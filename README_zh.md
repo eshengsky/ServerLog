@@ -131,7 +131,7 @@ serverlog.config({
     </tr>
     <tr>
         <td>extension.key</td>
-        <td>此处设置的key要和扩展程序中设置的 secret key 一样时，才会输出日志</td>
+        <td>当前服务的 key，详见 <a href="https://github.com/eshengsky/ServerLog/blob/master/chrome-extension-server-log/README_zh.md#secret-key">Secret Key</a></td>
         <td>string</td>
         <td>yourownsecretkey</td>
     </tr>
@@ -249,6 +249,9 @@ node server.js > logfile.txt
 ```
 
 具体可以参考 [这里](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file)。
+
+## 示例
+https://github.com/eshengsky/ServerLog/tree/master/example
 
 ## 许可
 MIT License

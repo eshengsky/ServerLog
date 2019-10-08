@@ -31,17 +31,35 @@ If you can't access the Chrome Web Store, you can download and install it as fol
 1. Download and decompress from [Release](https://github.com/eshengsky/ServerLog/releases) page.
 2. Press [chrome://extensions/](chrome://extensions/) in Chrome browser address bar to go to the extension page, and check "Developer mode".
 3. Drag the downloaded `chrome-extension-server-log` folder onto the page and click the "Add Extension Program" button.
-4. Press F12 to open the dev tools, click `ServerLog` tab, the server side logs will be displayed here.
+4. Press `Ctrl+Shift+I` to open the dev tools, click `ServerLog` tab, set [Secret Key](https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log#secret-key).
 
-## What is secret key
+## Secret Key
 
-For security reasons, the secret key set in the extension will do a comparison with the key on the server side, and the log will be output to the extension only if it is exactly the same.
+For security reasons, to prevent unauthorized users from viewing the server log, the key set in the extension will be sent to the server for verification. Only when it is exactly the same will the log be output to the extension.
 
-The default server side key is `yourownsecretkey`.
+On server side, set `extension.key` in [config](https://github.com/eshengsky/ServerLog/blob/master/README_zh.md#configoptions) as the key of current service:
+```js
+serverlog.config({
+    extension: {
+        enable: true,
+        key: 'my_secret_key_123'
+    }
+});
+```
+
+In the extension panel, click the 'key' icon, add a line `my_secret_key_123`, click Save, then you can receive the log of the above server.
+
+If you do not know the secret key of the service, please consult the administrator of the service.
+
+### Note
+
+* If you want to view logs for multiple services, you can add multiple keys by wrapping in the extension.
+* In service the default key is `yourownsecretkey`.
+* As with passwords, it is recommended to periodically modify the secret key of all services.
 
 ## Basic principles
 
-1. After the extension is installed, the extension automatically adds the request header `X-Request-Server-Log`, its value is the secret key configured by the user in the extension.
+1. After the extension is installed, the extension automatically adds the request header `X-Request-Server-Log`, its value is the secret key configured by the user in the extension, ​​separated by semicolons if there are multiple keys.
 2. The server determines whether it is a legitimate user based on the value of the above request header;
 3. In the case of a legitimate user, the server inserts the logs into the response header `X-Server-Log-Data` in accordance with [Conventions](#conventions).
 4. The extension listens for network requests received in Network, parses the values of `X-Server-Log-Data`, and outputs the obtained log information to the `ServerLog` Panel of the dev tools.

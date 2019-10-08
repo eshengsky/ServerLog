@@ -15,6 +15,10 @@
         "message": "保存"
     },
 
+    "keyphd": {
+        "message": "每行设置一个key"
+    },
+
     "whatIs": {
         "message": "什么是 Secret Key？"
     },

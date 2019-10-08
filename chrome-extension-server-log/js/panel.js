@@ -96,14 +96,14 @@
 
     // disable contextmenu
     window.document.addEventListener('contextmenu', e => {
-        e.preventDefault();
+        // e.preventDefault();
     });
 
     getEl('#btnWhat')
         .addEventListener('click', () => {
-            let url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log#what-is-secret-key';
+            let url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log#secret-key';
             if (chrome.i18n.getUILanguage() === 'zh-CN') {
-                url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log/README_zh.md#什么是-secret-key';
+                url = 'https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log/README_zh.md#secret-key';
             }
             chrome.tabs.create({ url });
         });
@@ -272,8 +272,9 @@
             }
         });
 
-    const currVersionNumber = getNumVersion(chrome.app.getDetails().version);
-    const version = `v${chrome.app.getDetails().version}`;
+    const versionStr = chrome.runtime.getManifest().version;
+    const currVersionNumber = getNumVersion(versionStr);
+    const version = `v${versionStr}`;
     getEl('#curr-version').innerHTML = `<a href="https://github.com/eshengsky/ServerLog/releases/tag/${version}" target="_blank">${version}</a>`;
 
     checkUpdate();

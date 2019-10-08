@@ -29,17 +29,35 @@ Chrome 浏览器扩展插件，用于在 Chrome 开发者工具和 Console 中�
 1. 在 [Release](https://github.com/eshengsky/ServerLog/releases) 下载并解压缩；
 2. 在 Chrome 浏览器地址栏输入 [chrome://extensions/](chrome://extensions/) 进入扩展页面，勾选"开发者模式"；
 3. 将下载后的 `chrome-extension-server-log` 文件夹拖到页面中，点击"添加扩展程序"按钮；
-4. 按 F12 打开开发者工具，点击 `ServerLog` 面板，后端日志将会展示在这里。
+4. 按 `Ctrl+Shift+I` 打开开发者工具，点击 `ServerLog` 面板，设置 [Secret Key](https://github.com/eshengsky/ServerLog/blob/master/chrome-extension-server-log/README_zh.md#secret-key)。
 
-## 什么是 secret key
+## Secret Key
 
-为安全起见，扩展程序中设置的 secret key，会和服务端的 key 做一个比对，只有完全一样时，才会输出日志到扩展中。
+为安全考虑，避免未授权的用户查看服务端日志，扩展程序中设置的 key 会发送到服务端进行校验，只有完全一样时，才会输出日志到扩展程序。
 
-服务端默认的 key 值是 `yourownsecretkey`。
+在服务端通过 [config](https://github.com/eshengsky/ServerLog/blob/master/README_zh.md#configoptions) 设置 `extension.key` 作为当前服务的 key：
+```js
+serverlog.config({
+    extension: {
+        enable: true,
+        key: 'my_secret_key_123'
+    }
+});
+```
+
+在扩展程序界面，点击`钥匙`图标，添加一行 `my_secret_key_123`，点击保存，这样你才可以接收到上述服务端的日志。
+
+如果你不知道相应服务的 secret key，请咨询该服务的管理员。
+
+### 说明
+
+* 如果你想查看多个服务的日志，你可以在扩展程序中通过换行添加多个 key。
+* 服务端默认的 key 值是 `yourownsecretkey`。
+* 和密码一样，建议定期修改所有服务的 secret key。
 
 ## 基本原理
 
-1. 安装扩展程序后，扩展会自动添加请求头 `X-Request-Server-Log`，它的值是用户在扩展中配置的secret key；
+1. 安装扩展程序后，扩展会自动添加请求头 `X-Request-Server-Log`，它的值是用户在扩展中配置的secret key，如果有多个 key 会以分号隔开；
 2. 服务端根据上述请求头的值判断是否是合法用户；
 3. 若是合法用户，服务端按照 [约定](#约定)，将日志插入响应头 `X-Server-Log-Data` 中；
 4. 扩展会监听 Network 中接收到的网络请求，解析 `X-Server-Log-Data` 的值并将得到的日志信息输出到开发者工具的 `ServerLog` 面板中。

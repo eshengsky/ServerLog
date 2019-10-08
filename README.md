@@ -134,7 +134,7 @@ The full parameters supported are as follows:
     </tr>
     <tr>
         <td>extension.key</td>
-        <td>The key set here will not output the log until the same as the secret key set in the Chrome extension</td>
+        <td>The key of the current service, see here <a href="https://github.com/eshengsky/ServerLog/tree/master/chrome-extension-server-log#secret-key">Secret Key</a></td>
         <td>string</td>
         <td>yourownsecretkey</td>
     </tr>
@@ -213,7 +213,7 @@ logger.infoC('read data from local file, please view data in Chrome extension.')
 
 After registered middleware, all the logs associated with the request contain a request ID by default. In the same request, the request ID for all logs must be the same, and the request ID must be different in different requests.
 
-For example, when user A accesses the index.html process ServerLog prints 10 logs, the request ID for the 10 logs are the same, and user B also accesses the page, resulting in 10 logs, which must also have the same request ID, but different from the request ID of User A 。
+For example, when user A accesses the index.html process ServerLog prints 10 logs, the request ID for the 10 logs are the same, and user B also accesses the page, resulting in 10 logs, which must also have the same request ID, but different from the request ID of User A.
 
 ### Main role
 
@@ -251,7 +251,10 @@ In a Linux environment, it is easy to redirect the output to a file with very si
 node server.js > logfile.txt
 ```
 
-Specific can be referred [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file)。
+Specific can be referred [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file).
+
+## Example
+https://github.com/eshengsky/ServerLog/tree/master/example
 
 ## License
 MIT License
