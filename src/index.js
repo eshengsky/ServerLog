@@ -1,7 +1,7 @@
 const shortid = require('shortid');
 const { Logger, ServerLogSuffix } = require('./logger');
 
-const reqIdName = 'X-Request-Id';
+const reqIdName = 'x-request-id';
 const loggers = [];
 
 // the default options
@@ -44,9 +44,11 @@ function config(cfg) {
  * @returns {function}
  */
 function middleware() {
+    const url = require('url');
     return (req, res, next) => {
         // Set unique request id to combine logs
-        const reqId = req.query.__id || req.get(reqIdName) || shortid.generate();
+        const query = url.parse(req.url, true).query;
+        const reqId = query.__id || req.headers[reqIdName] || shortid.generate();
         req.__id = reqId;
         res.setHeader(reqIdName, reqId);
 

@@ -22,37 +22,41 @@
     </div>
     <div class="log-section">
         <header>
-            <span id="clear" title="__MSG_clear__">
-                <i class="iconfont iconclearup"></i>
-            </span>
-            <span id="split">&nbsp;</span>
-            <div class="search-wrap">
-                <label id="search-icon" for="search">
-                    <i class="iconfont iconsearch1187938easyiconnet"></i>
-                </label>
-                <input id="search" type="search" placeholder="__MSG_keywords__">
+            <div class="left">
+                <span id="clear" title="__MSG_clear__">
+                    <i class="iconfont iconclearup"></i>
+                </span>
+                <span id="split">&nbsp;</span>
+                <div class="search-wrap">
+                    <label id="search-icon" for="search">
+                        <i class="iconfont iconsearch1187938easyiconnet"></i>
+                    </label>
+                    <input id="search" type="search" placeholder="__MSG_keywords__">
+                </div>
+    
+                <label>__MSG_level__</label>
+                <div class="level-wrap">
+                    <div title="__MSG_info__" id="info" class="active"></div>
+                    <div title="__MSG_warn__" id="warn"></div>
+                    <div title="__MSG_error__" id="error"></div>
+                </div>
+    
+                <div class="custom-control custom-checkbox" title="__MSG_preserve1__">
+                    <input class="custom-control-input" id="check-preserve" type="checkbox">
+                    <label class="custom-control-label" for="check-preserve">__MSG_preserve2__</label>
+                </div>
+                <div class="custom-control custom-checkbox" title="__MSG_scroll1__">
+                    <input class="custom-control-input" id="check-scroll" type="checkbox" checked>
+                    <label class="custom-control-label" for="check-scroll">__MSG_scroll2__</label>
+                </div>
+                <span id="settings" title="__MSG_setSecretKey__">
+                    <i class="iconfont iconkey"></i>
+                </span>
             </div>
-
-            <label>__MSG_level__</label>
-            <div class="level-wrap">
-                <div title="__MSG_info__" id="info" class="active"></div>
-                <div title="__MSG_warn__" id="warn"></div>
-                <div title="__MSG_error__" id="error"></div>
+            <div class="right">
+                <span id="count-info">__MSG_total__<i id="total-count">0</i>__MSG_pieces__</span>
+                <span id="filter-info"></span>
             </div>
-
-            <div class="custom-control custom-checkbox" title="__MSG_preserve1__">
-                <input class="custom-control-input" id="check-preserve" type="checkbox">
-                <label class="custom-control-label" for="check-preserve">__MSG_preserve2__</label>
-            </div>
-            <div class="custom-control custom-checkbox" title="__MSG_scroll1__">
-                <input class="custom-control-input" id="check-scroll" type="checkbox" checked>
-                <label class="custom-control-label" for="check-scroll">__MSG_scroll2__</label>
-            </div>
-            <span id="settings" title="__MSG_setSecretKey__">
-                <i class="iconfont iconkey"></i>
-            </span>
-            <span id="filter-info"></span>
-            <span id="count-info">__MSG_total__<i id="total-count">0</i>__MSG_pieces__</span>
         </header>
         <ul id="logs"></ul>
         <div id="no-data">__MSG_nodata__</div>

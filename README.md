@@ -227,10 +227,10 @@ When you can navigate to a log related to a request, between the category name o
 [2019-05-08 15:23:06.911] [INFO] home - {Ra8dx5lAL} This is an info log. (URL: http://localhost:3000/)
 ```
 
-If you can listen to a network request for a page, the response header `X-Request-Id` is the request ID:
+If you can listen to a network request for a page, the response header `x-request-id` is the request ID:
 
 ```
-X-Request-Id: Ra8dx5lAL
+x-request-id: Ra8dx5lAL
 ```
 
 ## Persistence

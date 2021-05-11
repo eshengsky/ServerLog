@@ -224,10 +224,10 @@ logger.infoC('read data from local file, please view data in Chrome extension.')
 [2019-05-08 15:23:06.911] [INFO] home - {Ra8dx5lAL} This is an info log. (URL: http://localhost:3000/)
 ```
 
-如果你可以监听页面的网络请求，则响应头 `X-Request-Id` 即是请求 ID：
+如果你可以监听页面的网络请求，则响应头 `x-request-id` 即是请求 ID：
 
 ```
-X-Request-Id: Ra8dx5lAL
+x-request-id: Ra8dx5lAL
 ```
 
 ## 日志持久化

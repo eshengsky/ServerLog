@@ -4,8 +4,8 @@ const lzstring = require('lz-string');
 const stringify = require('json-stringify-safe');
 const chalk = require('chalk');
 
-const reqHeaderName = 'X-Request-Server-Log';
-const resHeaderName = 'X-Server-Log-Data';
+const reqHeaderName = 'x-request-server-log';
+const resHeaderName = 'x-server-log-data';
 const breakLineReg = new RegExp('\r?\n', 'g');
 
 // let Error support JSON serialize
@@ -36,7 +36,9 @@ if (!('toJSON' in Function.prototype)) {
 }
 
 function getFullUrl(req) {
-    return `${req.protocol}://${req.get('Host')}${req.originalUrl}`;
+    let proto = req.connection.encrypted ? 'https' : 'http';
+    proto = req.headers['x-forwarded-proto'] || proto;
+    return `${proto}://${req.headers['host']}${req.url}`;
 }
 
 /**
@@ -146,10 +148,10 @@ Logger.prototype = {
                 args.push(`(URL: ${getFullUrl(req)})`);
 
                 // check chrome extension secret key
-                const keysStr = req.get(reqHeaderName);
+                const keysStr = req.headers[reqHeaderName];
                 if (keysStr && keysStr.split(';').some(t => t.trim() === this.options.extension.key)) {
                     try {
-                        const currentHeader = res.get(resHeaderName);
+                        const currentHeader = res.headers(resHeaderName);
 
                         // Convert array to string
                         let msgStr = '';
@@ -194,14 +196,14 @@ Logger.prototype = {
                         if (!res.headersSent) {
                             // Max length limit
                             if (msgToSet.length > Number(this.options.extension.maxLength) * 1024) {
-                                res.set(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
+                                res.setHeader(resHeaderName, lzstring.compressToEncodedURIComponent(JSON.stringify([{
                                     time: now,
                                     type: 'warn',
                                     category: 'Server Log',
                                     message: `The logs are too much (${parseInt(msgToSet.length / 1024)}KB), cannot view them now.`
                                 }])));
                             } else {
-                                res.set(resHeaderName, msgToSet);
+                                res.setHeader(resHeaderName, msgToSet);
                             }
                         }
                     } catch (e) {
