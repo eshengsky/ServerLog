@@ -151,7 +151,7 @@ Logger.prototype = {
                 const keysStr = req.headers[reqHeaderName];
                 if (keysStr && keysStr.split(';').some(t => t.trim() === this.options.extension.key)) {
                     try {
-                        const currentHeader = res.headers(resHeaderName);
+                        const currentHeader = res.getHeader[resHeaderName];
 
                         // Convert array to string
                         let msgStr = '';

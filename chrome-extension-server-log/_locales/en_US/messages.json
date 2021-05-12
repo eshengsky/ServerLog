@@ -124,7 +124,7 @@
     },
 
     "withCtrl": {
-        "message": "Ctrl + click to follow link"
+        "message": "Ctrl/⌘ + click to follow link"
     },
 
     "description": {

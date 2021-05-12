@@ -222,8 +222,8 @@
                     e.target.classList.add('copy');
                 }, 800);
             } else if (e.target.classList.contains('link')) {
-                // Redirect when press Ctrl
-                if (e.ctrlKey) {
+                // Redirect when press Ctrl / Command
+                if (e.ctrlKey || e.metaKey) {
                     chrome.tabs.create({ url: e.target.dataset.link });
                 }
             } else if (e.target.classList.contains('full-link') || e.target.classList.contains('iconfull-screen') || e.target.classList.contains('span-full')) {
@@ -252,7 +252,7 @@
         .addEventListener('mouseover', e => {
             if (e.target.classList.contains('link')) {
                 // Show hand when press Ctrl
-                if (e.ctrlKey) {
+                if (e.ctrlKey || e.metaKey) {
                     e.target.style.cursor = 'pointer';
                 }
             }
