@@ -151,7 +151,7 @@ Logger.prototype = {
                 const keysStr = req.headers[reqHeaderName];
                 if (keysStr && keysStr.split(';').some(t => t.trim() === this.options.extension.key)) {
                     try {
-                        const currentHeader = res.getHeader[resHeaderName];
+                        const currentHeader = res.getHeader(resHeaderName);
 
                         // Convert array to string
                         let msgStr = '';
@@ -205,6 +205,8 @@ Logger.prototype = {
                             } else {
                                 res.setHeader(resHeaderName, msgToSet);
                             }
+                        } else {
+                            console.log('ServerLog warn: headers has sent!');
                         }
                     } catch (e) {
                         console.error(e);
